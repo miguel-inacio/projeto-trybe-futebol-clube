@@ -10,7 +10,7 @@ class Match extends Model {
 }
 
 Match.init({
-  homeTeam: {
+  homeTeamId: {
     type: INTEGER,
     allowNull: false,
   },
@@ -18,7 +18,7 @@ Match.init({
     type: INTEGER,
     allowNull: false,
   },
-  awayTeam: {
+  awayTeamId: {
     type: INTEGER,
     allowNull: false,
   },
