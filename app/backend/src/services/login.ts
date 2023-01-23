@@ -1,9 +1,8 @@
 import bcrypt = require('bcryptjs');
 import JWT from '../auth/jwtFunctions';
 import User from '../database/models/User';
-import { TUser } from './interfaces/TUser';
-import { TError } from './interfaces/TError';
 import ILoginService from './interfaces/ILoginService';
+import { TUser } from './interfaces/TUser';
 
 export default class LoginService implements ILoginService {
   public model = User;
@@ -13,7 +12,7 @@ export default class LoginService implements ILoginService {
     this.jwt = new JWT();
   }
 
-  public async userLogin(userLoginData: TUser): Promise<string | TError> {
+  public async userLogin(userLoginData: TUser): Promise<string | null> {
     const { email, password } = userLoginData;
     const user = await this.model.findOne({ where: { email } });
     if (user && bcrypt.compareSync(password, user.password)) {
@@ -21,6 +20,12 @@ export default class LoginService implements ILoginService {
       const token = this.jwt.createToken({ username, role });
       return token;
     }
-    throw new Error('Email ou senha inválidos!');
+    return null;
+  }
+
+  public async getUserByEmail(userData: TUser) {
+    const { email } = userData;
+    const user = await this.model.findOne({ where: { email } });
+    return { role: user?.role };
   }
 }

@@ -1,4 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
+import { JwtPayload } from 'jsonwebtoken';
+import JWT from '../auth/jwtFunctions';
 
 const validateLoginBody = (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
@@ -10,15 +12,19 @@ const validateLoginBody = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-const validateData = (req: Request, res: Response, next: NextFunction) => {
-  const { email, password } = req.body;
-  const emailRegex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/.test(email);
+const validateCredential = (req: Request, res: Response, next: NextFunction) => {
+  const { authorization } = req.headers;
+  const jwt = new JWT();
 
-  if (!emailRegex || password.length < 6) {
-    return res.status(401).send({ message: 'Incorrect email or password' });
+  if (!authorization) return res.status(401).json({ message: 'User not authorized' });
+
+  const userData = jwt.verifyToken(authorization) as JwtPayload;
+  if (userData.isError) {
+    return res.status(400).json({ message: userData.isError });
   }
+  req.body.user = userData;
 
   next();
 };
 
-export { validateLoginBody, validateData };
+export { validateLoginBody, validateCredential };
