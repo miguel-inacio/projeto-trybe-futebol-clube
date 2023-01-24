@@ -1,9 +1,15 @@
 import Team from '../database/models/Team';
 import Match from '../database/models/Match';
 import TMatchData from './interfaces/TMatchData';
+import TeamsService from './teams';
 
 export default class MatchesService {
   public model = Match;
+  public auxService;
+
+  constructor() {
+    this.auxService = new TeamsService();
+  }
 
   public async getAllMatches(inProgress: string) {
     const allMatches = await this.model.findAll({
@@ -27,7 +33,17 @@ export default class MatchesService {
     return matchesDataValues;
   }
 
+  public async verifyTeams(homeId: number, awayId: number) {
+    const homeTeam = await this.auxService.getTeamById(homeId);
+    const awayTeam = await this.auxService.getTeamById(awayId);
+
+    if (!homeTeam || !awayTeam) return { message: 'There is no team with such id!' };
+  }
+
   public async addMatchInProgress(matchData: TMatchData) {
+    const error = await this.verifyTeams(matchData.homeTeamId, matchData.awayTeamId);
+    if (error) return error;
+
     const newMatch = await this.model.create({ ...matchData, inProgress: true });
     return { ...newMatch.dataValues };
   }
