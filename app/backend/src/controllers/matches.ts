@@ -23,8 +23,6 @@ export default class MatchesController {
       const matchData = req.body;
       const newMatch = await this.service.addMatchInProgress(matchData);
 
-      // if (newMatch.progress) return res.status(404).send(newMatch);
-
       if (newMatch.message) return res.status(404).send(newMatch);
 
       return res.status(201).send(newMatch);
