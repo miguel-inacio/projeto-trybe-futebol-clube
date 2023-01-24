@@ -1,11 +1,12 @@
 import express = require('express');
+import { validateMatchTeams } from '../middlewares/matches';
 import MatchesController from '../controllers/matches';
 
 const matchesController = new MatchesController();
 
 const router = express.Router();
 
-router.post('/', matchesController.addMatchInProgress.bind(matchesController));
+router.post('/', validateMatchTeams, matchesController.addMatchInProgress.bind(matchesController));
 
 router.patch('/:id/finish', matchesController.finishMatch.bind(matchesController));
 

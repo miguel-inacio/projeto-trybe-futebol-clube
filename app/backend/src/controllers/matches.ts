@@ -22,6 +22,7 @@ export default class MatchesController {
     try {
       const matchData = req.body;
       const newMatch = await this.service.addMatchInProgress(matchData);
+
       return res.status(201).send(newMatch);
     } catch (error) {
       console.log(error);
