@@ -4,13 +4,7 @@ import Match from '../database/models/Match';
 export default class MatchesService {
   public model = Match;
 
-  // public async getAllMatches() {
-  //   const allMatches = await this.model.findAll();
-  //   console.log('resultado da query: ', allMatches);
-  //   return allMatches;
-  // }
-
-  public async getAllMatches() {
+  public async getAllMatches(inProgress: string) {
     const allMatches = await this.model.findAll({
       include: [
         { model: Team, as: 'homeTeam', attributes: { exclude: ['id'] } },
@@ -18,7 +12,17 @@ export default class MatchesService {
       ],
     });
     const matchesDataValues = allMatches.map((match) => match.dataValues);
-    console.log(matchesDataValues);
+
+    if (inProgress === 'true') {
+      const matchesInProgress = matchesDataValues.filter((match) => match.inProgress === true);
+      return matchesInProgress;
+    }
+
+    if (inProgress === 'false') {
+      const finishedMatches = matchesDataValues.filter((match) => match.inProgress === false);
+      return finishedMatches;
+    }
+
     return matchesDataValues;
   }
 }
