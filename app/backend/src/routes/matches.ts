@@ -15,6 +15,8 @@ router.post(
 
 router.patch('/:id/finish', matchesController.finishMatch.bind(matchesController));
 
+router.patch('/:id', matchesController.updateMatchScore.bind(matchesController));
+
 router.get('/', matchesController.getAllMatches.bind(matchesController));
 
 export default router;

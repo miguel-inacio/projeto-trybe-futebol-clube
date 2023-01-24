@@ -40,4 +40,15 @@ export default class MatchesController {
       console.log(error);
     }
   }
+
+  public async updateMatchScore(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const newScore = req.body;
+      const result = await this.service.updateScore(id, newScore);
+      if (result) return res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

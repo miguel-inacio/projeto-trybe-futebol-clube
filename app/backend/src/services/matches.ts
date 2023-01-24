@@ -2,6 +2,7 @@ import Team from '../database/models/Team';
 import Match from '../database/models/Match';
 import TMatchData from './interfaces/TMatchData';
 import TeamsService from './teams';
+import IScore from './interfaces/IScore';
 
 export default class MatchesService {
   public model = Match;
@@ -54,5 +55,14 @@ export default class MatchesService {
       { where: { id } },
     );
     return { message: 'Finished' };
+  }
+
+  public async updateScore(id: string, newScore: IScore) {
+    const { homeTeamGoals, awayTeamGoals } = newScore;
+    await this.model.update(
+      { homeTeamGoals, awayTeamGoals },
+      { where: { id } },
+    );
+    return { message: 'Score updated!' };
   }
 }
