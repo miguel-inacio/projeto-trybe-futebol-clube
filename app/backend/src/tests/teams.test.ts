@@ -18,7 +18,15 @@ describe('Rota de times', () => {
     const result = await chai.request(app).get('/teams');
     expect(result.status).to.be.equal(200);
   });
-
 });
+
+describe('Rota de times', () => {
+
+  it('retorna status 200 ao requerer time por id', async () => {
+    const result = await chai.request(app).get('/teams/1');
+    expect(result.status).to.be.equal(200);
+  });
+});
+
 
 
