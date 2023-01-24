@@ -17,14 +17,13 @@ export default class LoginService implements ILoginService {
     const user = await this.model.findOne({ where: { email } });
     if (user && bcrypt.compareSync(password, user.password)) {
       const { role, username } = user;
-      const token = this.jwt.createToken({ username, role });
+      const token = this.jwt.createToken({ username, role, email });
       return token;
     }
     return null;
   }
 
-  public async getUserByEmail(userData: TUser) {
-    const { email } = userData;
+  public async getRoleByEmail(email: string) {
     const user = await this.model.findOne({ where: { email } });
     return { role: user?.role };
   }

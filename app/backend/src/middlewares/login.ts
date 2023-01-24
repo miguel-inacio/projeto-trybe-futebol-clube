@@ -14,10 +14,10 @@ const validateLoginBody = (req: Request, res: Response, next: NextFunction) => {
 
 const validateCredential = (req: Request, res: Response, next: NextFunction) => {
   const { authorization } = req.headers;
+
+  if (!authorization) return res.status(401).json({ message: 'Unauthorized user' });
+
   const jwt = new JWT();
-
-  if (!authorization) return res.status(401).json({ message: 'User not authorized' });
-
   const userData = jwt.verifyToken(authorization) as JwtPayload;
   if (userData.isError) {
     return res.status(400).json({ message: userData.isError });

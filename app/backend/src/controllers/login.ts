@@ -24,8 +24,8 @@ export default class LoginController {
 
   public async getUserRole(req: Request, res: Response) {
     try {
-      const { user } = req.body;
-      const userRole = await this.service.getUserByEmail(user.email);
+      const { user: { email } } = req.body;
+      const userRole = await this.service.getRoleByEmail(email);
       return res.status(200).send(userRole);
     } catch (error) {
       console.log(error);
