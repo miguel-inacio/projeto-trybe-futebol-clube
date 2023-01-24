@@ -1,5 +1,6 @@
 import Team from '../database/models/Team';
 import Match from '../database/models/Match';
+import TMatchData from './interfaces/TMatchData';
 
 export default class MatchesService {
   public model = Match;
@@ -24,5 +25,18 @@ export default class MatchesService {
     }
 
     return matchesDataValues;
+  }
+
+  public async addMatchInProgress(matchData: TMatchData) {
+    const newMatch = await this.model.create({ ...matchData, inProgress: true });
+    return { ...newMatch.dataValues };
+  }
+
+  public async finishMatch(id: string) {
+    await this.model.update(
+      { inProgress: 'false' },
+      { where: { id } },
+    );
+    return { message: 'Finished' };
   }
 }
