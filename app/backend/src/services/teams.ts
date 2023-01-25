@@ -10,6 +10,6 @@ export default class TeamsService {
 
   public async getTeamById(id: number | string) {
     const team = await this.model.findOne({ where: { id } });
-    if (team) return team;
+    return team;
   }
 }

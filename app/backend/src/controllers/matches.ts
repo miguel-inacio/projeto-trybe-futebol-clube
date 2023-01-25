@@ -9,26 +9,18 @@ export default class MatchesController {
   }
 
   public async getAllMatches(req: Request, res: Response) {
-    try {
-      const { inProgress } = req.query;
-      const allMatches = await this.service.getAllMatches(inProgress as string);
-      return res.status(200).send(allMatches);
-    } catch (error) {
-      console.log(error);
-    }
+    const { inProgress } = req.query;
+    const allMatches = await this.service.getAllMatches(inProgress as string);
+    return res.status(200).send(allMatches);
   }
 
   public async addMatchInProgress(req: Request, res: Response) {
-    try {
-      const matchData = req.body;
-      const newMatch = await this.service.addMatchInProgress(matchData);
+    const matchData = req.body;
+    const newMatch = await this.service.addMatchInProgress(matchData);
 
-      if (newMatch.message) return res.status(404).send(newMatch);
+    if (newMatch.message) return res.status(404).send(newMatch);
 
-      return res.status(201).send(newMatch);
-    } catch (error) {
-      console.log(error);
-    }
+    return res.status(201).send(newMatch);
   }
 
   public async finishMatch(req: Request, res: Response) {

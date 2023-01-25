@@ -7,6 +7,7 @@ import { app } from '../app';
 import Example from '../database/models/ExampleModel';
 
 import { Response } from 'superagent';
+import User from '../database/models/User';
 
 chai.use(chaiHttp);
 
@@ -43,8 +44,18 @@ describe('Rota de login', () => {
   });
 
   it('retorna status 200 ao receber dados válidos', async () => {
+    const userMock = {
+      id: 1,
+      email: 'user@user.com',
+      password: '$2a$08$Y8Abi8jXvsXyqm.rmp0B.uQBA5qUz7T6Ghlg/CvVr/gLxYj5UAZVO',
+      username: 'user',
+      role: 'user'
+    }
+
+    sinon.stub(User, 'findOne').resolves(userMock as unknown as User)
     const result = await chai.request(app).post('/login').send({ ...userData })
     expect(result.status).to.be.equal(200);
+    expect(result.body).to.have.property('token');
   });
 
 });
