@@ -24,23 +24,15 @@ export default class MatchesController {
   }
 
   public async finishMatch(req: Request, res: Response) {
-    try {
-      const { id } = req.params;
-      const result = await this.service.finishMatch(id);
-      if (result) return res.status(200).json(result);
-    } catch (error) {
-      console.log(error);
-    }
+    const { id } = req.params;
+    const result = await this.service.finishMatch(id);
+    return res.status(200).json(result);
   }
 
   public async updateMatchScore(req: Request, res: Response) {
-    try {
-      const { id } = req.params;
-      const newScore = req.body;
-      const result = await this.service.updateScore(id, newScore);
-      if (result) return res.status(200).json(result);
-    } catch (error) {
-      console.log(error);
-    }
+    const { id } = req.params;
+    const newScore = req.body;
+    const result = await this.service.updateScore(id, newScore);
+    return res.status(200).json(result);
   }
 }
