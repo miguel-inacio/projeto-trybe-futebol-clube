@@ -24,12 +24,12 @@ export default class LeaderboardFormat {
     homeMatches: IHomeMatches[] | undefined,
     awayMatches: IAwayMatches[] | undefined,
   ) => {
-    console.log('homeMatches do setTotalPoints: ', homeMatches);
+    // console.log('homeMatches do setTotalPoints: ', homeMatches);
     const homePoints = homeMatches ? this.pointsCounter(homeMatches, 'home') : 0;
-    console.log('homePoints do setTotalPoints: ', homePoints);
+    // console.log('homePoints do setTotalPoints: ', homePoints);
 
     const awayPoints = awayMatches ? this.pointsCounter(awayMatches, 'away') : 0;
-    console.log('awayPoints do setTotalPoints: ', awayPoints);
+    // console.log('awayPoints do setTotalPoints: ', awayPoints);
 
     return homePoints + awayPoints;
   };
@@ -40,7 +40,7 @@ export default class LeaderboardFormat {
   ) => {
     const totalHomeMatches = homeMatches ? homeMatches.length : 0;
     const totalAwayMatches = awayMatches ? awayMatches.length : 0;
-    console.log('home: ', totalHomeMatches, 'away: ', totalAwayMatches);
+    // console.log('home: ', totalHomeMatches, 'away: ', totalAwayMatches);
 
     return totalHomeMatches + totalAwayMatches;
   };

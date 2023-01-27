@@ -9,4 +9,6 @@ router.get('/home', leaderboardController.getAllTeams.bind(leaderboardController
 
 router.get('/away', leaderboardController.getAllTeams.bind(leaderboardController));
 
+router.get('/', leaderboardController.getAllTeams.bind(leaderboardController));
+
 export default router;

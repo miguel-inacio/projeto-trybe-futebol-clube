@@ -46,14 +46,24 @@ export default class LeaderboardService {
 
   public async getAllTeamsByPitch(pitch: string) {
     let matches;
-    if (pitch === '/home') matches = await this.queryTeamsByPitch('homeTeam');
-    if (pitch === '/away') matches = await this.queryTeamsByPitch('awayTeam');
-    else matches = await this.queryAllTeams();
-    // console.log(pitch);
-    // console.log(matches[0].homeTeam);
-    // console.log(matches[0].awayTeam);
+    if (pitch === '/home') {
+      console.log('entrei na condição da home');
+      matches = await this.queryTeamsByPitch('homeTeam');
+    } else if (pitch === '/away') {
+      console.log('entrei na condição do away');
+      matches = await this.queryTeamsByPitch('awayTeam');
+    } else {
+      console.log('entrei na condição do else');
+      matches = await this.queryAllTeams();
+    }
+    console.log(pitch);
+    // console.log('array da home: ', matches[0].homeTeam);
+    // console.log('array do away: ', matches[0].awayTeam);
 
     const formatedMatches = this.formatter.formatHomeTeamData(matches);
     return formatedMatches;
   }
 }
+
+// /away volta só array com awayTeam
+// /home volta array com os dois!
