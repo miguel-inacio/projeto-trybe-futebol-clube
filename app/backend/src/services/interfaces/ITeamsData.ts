@@ -6,16 +6,22 @@ export interface IHomeMatches {
 }
 
 export interface IAwayMatches {
-  awayTeam?: {
-    homeTeamGoals: number,
-    homeTeamId: number,
-    awayTeamId: number,
-    awayTeamGoals: number,
-  }[]
+  homeTeamGoals: number,
+  homeTeamId: number,
+  awayTeamId: number,
+  awayTeamGoals: number,
 }
 
 export interface IHomeTeamsData {
   id?: number;
   teamName: string;
+  homeTeam: IHomeMatches[] | undefined
+  awayTeam: IAwayMatches[] | undefined
+}
+
+export interface ITeamsData {
+  id?: number;
+  teamName: string;
   homeTeam: IHomeMatches[]
+  awayTeam: IAwayMatches[]
 }

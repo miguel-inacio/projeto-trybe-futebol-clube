@@ -8,8 +8,9 @@ export default class LeaderboardController {
     this.service = new LeaderboardService();
   }
 
-  public async getAllHomeTeams(_req: Request, res: Response) {
-    const allHomeTeams = await this.service.getAllHomeTeams();
+  public async getAllTeams(req: Request, res: Response) {
+    const pitch = req.path;
+    const allHomeTeams = await this.service.getAllTeamsByPitch(pitch);
     return res.status(200).send(allHomeTeams);
   }
 }
