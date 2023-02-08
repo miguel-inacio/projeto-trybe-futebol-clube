@@ -4,18 +4,13 @@ export default class LeaderboardFormat {
   public pointsCounter = (matches: IHomeMatches[], pitch: string) => {
     let totalHomePoints = 0;
     let totalAwayPoints = 0;
-
     matches.forEach((match) => {
-      if (match.homeTeamGoals > match.awayTeamGoals) {
-        totalHomePoints += 3;
-      }
+      if (match.homeTeamGoals > match.awayTeamGoals) totalHomePoints += 3;
       if (match.homeTeamGoals === match.awayTeamGoals) {
         totalHomePoints += 1;
         totalAwayPoints += 1;
       }
-      if (match.homeTeamGoals < match.awayTeamGoals) {
-        totalAwayPoints += 3;
-      }
+      if (match.homeTeamGoals < match.awayTeamGoals) totalAwayPoints += 3;
     });
     return pitch === 'home' ? totalHomePoints : totalAwayPoints;
   };
@@ -24,13 +19,8 @@ export default class LeaderboardFormat {
     homeMatches: IHomeMatches[] | undefined,
     awayMatches: IAwayMatches[] | undefined,
   ) => {
-    // console.log('homeMatches do setTotalPoints: ', homeMatches);
     const homePoints = homeMatches ? this.pointsCounter(homeMatches, 'home') : 0;
-    // console.log('homePoints do setTotalPoints: ', homePoints);
-
     const awayPoints = awayMatches ? this.pointsCounter(awayMatches, 'away') : 0;
-    // console.log('awayPoints do setTotalPoints: ', awayPoints);
-
     return homePoints + awayPoints;
   };
 
@@ -40,8 +30,6 @@ export default class LeaderboardFormat {
   ) => {
     const totalHomeMatches = homeMatches ? homeMatches.length : 0;
     const totalAwayMatches = awayMatches ? awayMatches.length : 0;
-    // console.log('home: ', totalHomeMatches, 'away: ', totalAwayMatches);
-
     return totalHomeMatches + totalAwayMatches;
   };
 
@@ -51,12 +39,10 @@ export default class LeaderboardFormat {
   ) => {
     let totalHomeVictories = 0;
     let totalAwayVictories = 0;
-
     matches.forEach((match) => {
       if (match.homeTeamGoals > match.awayTeamGoals) totalHomeVictories += 1;
       if (match.homeTeamGoals < match.awayTeamGoals) totalAwayVictories += 1;
     });
-
     return pitch === 'home' ? totalHomeVictories : totalAwayVictories;
   };
 
@@ -66,7 +52,6 @@ export default class LeaderboardFormat {
   ) => {
     const totalHomeVictories = homeMatches ? this.victoriesCounter(homeMatches, 'home') : 0;
     const totalAwayVictories = awayMatches ? this.victoriesCounter(awayMatches, 'away') : 0;
-
     return totalHomeVictories + totalAwayVictories;
   };
 
@@ -74,11 +59,9 @@ export default class LeaderboardFormat {
     matches: IHomeMatches[],
   ) => {
     let totalDraws = 0;
-
     matches.forEach((match) => {
       if (match.homeTeamGoals === match.awayTeamGoals) totalDraws += 1;
     });
-
     return totalDraws;
   };
 
@@ -97,12 +80,10 @@ export default class LeaderboardFormat {
   ) => {
     let totalHomeLosses = 0;
     let totalAwayLosses = 0;
-
     matches.forEach((match) => {
       if (match.homeTeamGoals < match.awayTeamGoals) totalHomeLosses += 1;
       if (match.homeTeamGoals > match.awayTeamGoals) totalAwayLosses += 1;
     });
-
     return pitch === 'home' ? totalHomeLosses : totalAwayLosses;
   };
 

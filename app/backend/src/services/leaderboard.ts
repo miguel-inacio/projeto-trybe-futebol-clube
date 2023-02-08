@@ -56,14 +56,7 @@ export default class LeaderboardService {
       console.log('entrei na condição do else');
       matches = await this.queryAllTeams();
     }
-    console.log(pitch);
-    // console.log('array da home: ', matches[0].homeTeam);
-    // console.log('array do away: ', matches[0].awayTeam);
-
     const formatedMatches = this.formatter.formatHomeTeamData(matches);
     return formatedMatches;
   }
 }
-
-// /away volta só array com awayTeam
-// /home volta array com os dois!
